@@ -1,0 +1,64 @@
+# ----------------- Queries -----------------
+type Query {
+    getUser(id: ID!): ResponseSingleUser
+    getAllUsers: ResponseUserList
+}
+
+# ----------------- Mutations -----------------
+type Mutation {
+    createUser(input: UserInput!): ResponseSingleUser
+    updateUser(id: ID!, input: UserInput!): ResponseSingleUser
+    deleteUser(id: ID!): ResponseDelete
+}
+
+# ----------------- Generic Response wrappers -----------------
+
+# Single User response
+type ResponseSingleUser {
+    status: String!
+    message: String!
+    data: User
+}
+
+# Multiple Users response
+type ResponseUserList {
+    status: String!
+    message: String!
+    data: [User!]!
+}
+
+# Delete response (no data)
+type ResponseDelete {
+    status: String!
+    message: String!
+    data: Boolean
+}
+
+# ----------------- User type -----------------
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    role: UserRole!
+    status: UserStatus!
+}
+
+# ----------------- Input type for create/update -----------------
+input UserInput {
+    name: String!
+    email: String!
+    role: UserRole!
+    status: UserStatus!
+}
+
+# ----------------- Enums -----------------
+enum UserRole {
+    ADMIN
+    EDITOR
+    VIEWER
+}
+
+enum UserStatus {
+    ACTIVE
+    INACTIVE
+}
